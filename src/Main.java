@@ -38,10 +38,10 @@ public class Main {
         }else {
             RequestURL request = new RequestURL();
         }
-
-        System.out.println(appKey);
-        System.out.println(secretKey);
-        System.out.println(URLBarcode);
+//
+//        System.out.println(appKey);
+//        System.out.println(secretKey);
+//        System.out.println(URLBarcode);
 
         Scan scan = new Scan();
         DateRequest dateRequest = new DateRequest();

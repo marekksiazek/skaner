@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SymbolScanner:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SymbolScanner_jar</output-path>
+    <root id="archive" name="SymbolScanner.jar">
+      <element id="module-output" name="SymbolScanner" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/jSerialComm-2.10.4.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

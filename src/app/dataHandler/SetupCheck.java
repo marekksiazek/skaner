@@ -28,7 +28,7 @@ public class SetupCheck {
             result = file.createNewFile();
 
             if (result) {
-                System.out.println("file created" + file.getCanonicalPath());
+//                System.out.println("file created" + file.getCanonicalPath());
                 ErrorSetupEnter errorFrame = new ErrorSetupEnter();
             }
         } catch (IOException e) {

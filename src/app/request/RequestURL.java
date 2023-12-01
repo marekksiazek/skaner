@@ -32,7 +32,7 @@ public class RequestURL {
 
     public RequestURL() throws IOException {
 
-        URL url = new URL("https://stand-by.pl/barcode/register.php?vol=" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getSecretKey());
+        URL url = new URL("https://stand-by.pl/barcode/register.php?vol=" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getAppKay());
         HttpURLConnection con;
 
         {
@@ -42,7 +42,7 @@ public class RequestURL {
                 con.setDoOutput(true);
 
 
-                String outputString ="https://stand-by.pl/barcode/register.php?vol=" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getSecretKey();
+                String outputString ="https://stand-by.pl/barcode/register.php?vol=" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getAppKay();
                 OutputStream os = con.getOutputStream();
                 byte[] input = outputString.getBytes("utf-8");
                 os.write(input, 0, input.length);
@@ -54,8 +54,8 @@ public class RequestURL {
                 if (status != 200) {
                     UrlError errorURL = new UrlError();
                 }
-                System.out.println(status);
-                System.out.println(responseMSG);
+//                System.out.println(status);
+//                System.out.println(responseMSG);
 
 
             } catch (IOException e) {

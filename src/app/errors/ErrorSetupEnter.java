@@ -10,15 +10,21 @@ public class ErrorSetupEnter extends JFrame {
 
     public ErrorSetupEnter() {
         JLabel msgConnectError = new JLabel();
+        JLabel msgConnectTextError = new JLabel();
         JButton btn = new JButton();
 
         msgConnectError.setText("Brak wprowadzonych ustawień");
         msgConnectError.setFont(new Font("Arial", Font.PLAIN, 14));
         msgConnectError.setForeground(Color.RED);
-        msgConnectError.setBounds(50, 30, 200, 26);
+        msgConnectError.setBounds(100, 50, 200, 26);
+
+        msgConnectTextError.setText("Uruchom program ponownie po wprowadzeniu ustawień");
+        msgConnectTextError.setFont(new Font("Arial", Font.PLAIN, 12));
+        msgConnectTextError.setForeground(Color.BLACK);
+        msgConnectTextError.setBounds(55, 110, 300, 26);
 
         btn.setText("OK");
-        btn.setBounds(95, 80, 100, 26);
+        btn.setBounds(140, 200, 100, 26);
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -34,10 +40,11 @@ public class ErrorSetupEnter extends JFrame {
         this.setResizable(false);
         this.setVisible(true);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        this.setSize(300, 200);
+        this.setSize(400, 300);
 
 
         this.add(msgConnectError);
+        this.add(msgConnectTextError);
         this.add(btn);
     }
 

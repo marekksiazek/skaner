@@ -28,11 +28,6 @@ public class CheckRegisterKey {
                 trimSS = ss.substring(ss.length() - 9);
 
             }
-
-
-//
-
-
             return trimSS;
 
         };

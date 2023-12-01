@@ -1,12 +1,15 @@
 package app.request;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import app.dataHandler.DataReader;
+import app.errors.AppKeyError;
+
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class KeyHack {
+
+    private String firstLine;
     private String baseKey = "4609733220f8de810e1e8866d6d92ec9a073f3a569a517caee405e11e4f72949";
     private String username = System.getProperty("user.name");
 
@@ -29,7 +32,16 @@ public class KeyHack {
             out.println(hashedFormat+baseKey);
             out.close();
         }else {
-            System.out.println("Plik istnieje");
+            File fileCheck = new File("C:\\Users\\marek.ksiazek\\AppData\\Local\\Barcode\\setup.ini");
+
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            firstLine = br.readLine();
+//            System.out.println(firstLine);
+
+            if (!firstLine.equals(format.hashCode() + baseKey)){
+                AppKeyError error = new AppKeyError();
+            }
+
         }
 
 

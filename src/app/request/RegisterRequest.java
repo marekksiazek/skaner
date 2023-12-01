@@ -42,7 +42,7 @@ public class RegisterRequest {
 
 
     public String getResponseMSG() throws IOException {
-        URL url = new URL("https://stad-by.pl/barcode/register.php?vol" + CheckRegisterKey.getDiskSerialNumber());
+        URL url = new URL("https://stad-by.pl/barcode/register.php?vol" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getAppKay());
         HttpURLConnection con;
 
         con = (HttpURLConnection) url.openConnection();
@@ -50,7 +50,7 @@ public class RegisterRequest {
         con.setDoOutput(true);
 
 
-        String outputString = new DataReader().getURLBarcode() + "?vol=" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getSecretKey();
+        String outputString = "https://stad-by.pl/barcode/register.php?vol" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getAppKay();
         OutputStream os = con.getOutputStream();
         byte[] input = outputString.getBytes("utf-8");
         os.write(input, 0, input.length);
