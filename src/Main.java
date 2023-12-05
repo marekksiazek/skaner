@@ -1,3 +1,4 @@
+import app.Tray;
 import app.config.Scan;
 import app.dataHandler.CheckRegisterKey;
 import app.dataHandler.DataReader;
@@ -7,9 +8,9 @@ import app.errors.UrlError;
 import app.errors.ErrorBarcodeConnect;
 import app.errors.SecretKeyError;
 import app.request.DateRequest;
-import app.request.KeyHack;
 import app.request.RequestURL;
 import com.fazecast.jSerialComm.SerialPort;
+
 import java.io.IOException;
 
 
@@ -20,6 +21,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         SetupCheck setupCheck = new SetupCheck();
+        Tray tray = new Tray();
 
         CheckRegisterKey checkRegisterKey = new CheckRegisterKey();
         String serialDisk = checkRegisterKey.getTrimSS();
@@ -38,10 +40,6 @@ public class Main {
         }else {
             RequestURL request = new RequestURL();
         }
-//
-//        System.out.println(appKey);
-//        System.out.println(secretKey);
-//        System.out.println(URLBarcode);
 
         Scan scan = new Scan();
         DateRequest dateRequest = new DateRequest();
@@ -64,6 +62,7 @@ public class Main {
                 scan.Serial_EventBaseReading(serialPort1);
             }
         }
+
 
     }
 }
