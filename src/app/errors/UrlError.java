@@ -21,7 +21,9 @@ public class UrlError extends JFrame{
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SetupFrame frame = new SetupFrame();
+
+                    SetupFrame frame = new SetupFrame();
+
                 UrlError.this.dispose();
             }
         });

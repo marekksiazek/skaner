@@ -1,55 +1,92 @@
 package app.dataHandler;
 
+import com.fazecast.jSerialComm.SerialPort;
+
 import java.io.*;
 import java.util.ArrayList;
 
 public class DataReader {
-    File file = new File("C:\\Users\\marek.ksiazek\\AppData\\Local\\Barcode\\setup.ini");
+    public static File file = new File("C:\\Users\\marek.ksiazek\\AppData\\Local\\Barcode\\setup.ini");
     private String firstLine;
     private String secondLine;
     private String thirdLine;
+    private String comPort;
 
-    public DataReader() throws IOException {
+    public DataReader() {
         setFirstLine(getAppKay());
         setSecondLine(getSecondLine());
         setThirdLine(getURLBarcode());
+        setComPort(getComPort());
     }
 
-    public String getAppKay() throws IOException {
+    public String getAppKay(){
         String line = System.getProperty("line.separator");
         ArrayList<String> strArr = new ArrayList<>();
 
         String firstLine;
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        firstLine = br.readLine();
+        BufferedReader br = null;
+        try {
+            br = new BufferedReader(new FileReader(file));
+            firstLine = br.readLine();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
 
         return  firstLine;
     }
 
-    public String getSecretKey() throws IOException {
+    public String getSecretKey(){
         String line = System.getProperty("line.separator");
         ArrayList<String> strArr = new ArrayList<>();
 
         String secondLine;
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        br.readLine();
-        secondLine = br.readLine();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            br.readLine();
+            secondLine = br.readLine();
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return  secondLine;
 
     }
 
-    public String getURLBarcode() throws IOException {
+    public String getURLBarcode(){
         String line = System.getProperty("line.separator");
         ArrayList<String> strArr = new ArrayList<>();
 
         String thirdLine;
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        br.readLine();
-        br.readLine();
-        thirdLine = br.readLine();
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            br.readLine();
+            br.readLine();
+            thirdLine = br.readLine();
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         return  thirdLine;
+
+    }
+
+    public static String getComPort(){
+        String line = System.getProperty("line.separator");
+        ArrayList<String> strArr = new ArrayList<>();
+
+        String comLine;
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(file));
+            br.readLine();
+            br.readLine();
+            br.readLine();
+            comLine = br.readLine();
+        }catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return  comLine;
 
     }
 
@@ -67,6 +104,10 @@ public class DataReader {
         return secondLine;
     }
 
+    public String getCom() {
+        return comPort;
+    }
+
     public void setSecondLine(String secondLine) {
         this.secondLine = secondLine;
     }
@@ -77,5 +118,9 @@ public class DataReader {
 
     public void setThirdLine(String thirdLine) {
         this.thirdLine = thirdLine;
+    }
+
+    public void setComPort(String comPort) {
+        this.comPort = comPort;
     }
 }

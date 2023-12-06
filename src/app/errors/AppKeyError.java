@@ -21,8 +21,8 @@ public class AppKeyError extends JFrame{
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-              SetupFrame frame = new SetupFrame();
-              AppKeyError.this.dispose();
+                    SetupFrame frame = new SetupFrame();
+                AppKeyError.this.dispose();
             }
         });
 

@@ -1,5 +1,5 @@
 <component name="libraryTable">
-  <library name="jSerialComm-2.10.4">
+  <library name="lib">
     <CLASSES>
       <root url="file://$PROJECT_DIR$/lib" />
     </CLASSES>

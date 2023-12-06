@@ -28,7 +28,9 @@ public class ErrorSetupEnter extends JFrame {
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SetupFrame frame = new SetupFrame();
+
+                    SetupFrame frame = new SetupFrame();
+
                 ErrorSetupEnter.this.dispose();
             }
         });

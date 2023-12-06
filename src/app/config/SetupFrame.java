@@ -1,5 +1,8 @@
 package app.config;
 
+import app.dataHandler.DataReader;
+import com.fazecast.jSerialComm.*;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -11,19 +14,32 @@ import java.io.PrintWriter;
 public class SetupFrame extends JFrame {
 
     public String username = System.getProperty("user.name");
+    public SerialPort[] portLists = SerialPort.getCommPorts();
+
+
+
+
     public SetupFrame() {
         Border borderInput = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
+        String[] comLista = new String[portLists.length];
+        for (int i=0; i < portLists.length; i++){
+            String tempPort = portLists[i].getSystemPortName();
+            comLista[i] = tempPort;
+        }
+
+
+
 
         JLabel appKey = new JLabel("Klucz aplikacji: ");
         JLabel secretKey = new JLabel("Secretkey:  ");
         JLabel urlBarcode = new JLabel("URL Barcode:  ");
-        JLabel autostart = new JLabel("Autostart:  ");
+        JLabel comList = new JLabel("Lista COM:  ");
 
         JTextField appKeyInput = new JTextField(150);
         JTextField secretKeyInput = new JTextField(150);
         JTextField urlBarcodeInput = new JTextField(150);
+        JComboBox portList = new JComboBox(comLista);
 
-        JCheckBox autostartCheck = new JCheckBox();
 
         JButton buttonSave = new JButton("Zapisz");
 
@@ -40,35 +56,33 @@ public class SetupFrame extends JFrame {
         urlBarcode.setForeground(Color.WHITE);
         urlBarcode.setBounds(50, 150, 110, 26);
 
-        autostart.setFont(new Font("Arial", Font.PLAIN, 14));
-        autostart.setForeground(Color.WHITE);
-        autostart.setBounds(50, 200, 110, 26);
+        comList.setFont(new Font("Arial", Font.PLAIN, 14));
+        comList.setForeground(Color.WHITE);
+        comList.setBounds(50, 200, 110, 26);
+
 
         // INPUTS
         appKeyInput.setBounds(200, 50, 300, 26);
         appKeyInput.setBorder(borderInput);
         appKeyInput.setFont(new Font("Arial", Font.PLAIN, 14));
-
-
-
+        appKeyInput.setText(new DataReader().getAppKay());
 
         secretKeyInput.setBounds(200, 100, 300, 26);
         secretKeyInput.setBorder(borderInput);
         secretKeyInput.setFont(new Font("Arial", Font.PLAIN, 14));
-
-
+        secretKeyInput.setText(new DataReader().getSecretKey());
 
         urlBarcodeInput.setBounds(200, 150, 300, 26);
         urlBarcodeInput.setBorder(borderInput);
         urlBarcodeInput.setFont(new Font("Arial", Font.PLAIN, 14));
+        urlBarcodeInput.setText(new DataReader().getURLBarcode());
+
+        portList.setBounds(200, 200, 300, 26);
+        portList.setBorder(borderInput);
+        portList.setFont(new Font("Arial", Font.PLAIN, 14));
 
 
-        // CHECKBOX
 
-        autostartCheck.setLocation(200, 200);
-        autostartCheck.setSize(36, 36);
-        autostartCheck.setBackground(Color.DARK_GRAY);
-        autostartCheck.setBorder(borderInput);
 
         // BUTTON
         buttonSave.setBounds(450, 300, 70, 26);
@@ -79,12 +93,14 @@ public class SetupFrame extends JFrame {
                 String appKeyInputValue = appKeyInput.getText();
                 String secretKeyInputValue = secretKeyInput.getText();
                 String urlBarcodeInputValue = urlBarcodeInput.getText();
+                String portListValue = portList.getItemAt(portList.getSelectedIndex()).toString();
 
                 try {
                     PrintWriter out = new PrintWriter("C:\\Users\\" + username + "\\AppData\\Local\\Barcode\\setup.ini");
                     out.println(appKeyInputValue);
                     out.println(secretKeyInputValue);
                     out.println(urlBarcodeInputValue);
+                    out.println(portListValue);
 
                     out.close();
 
@@ -111,13 +127,13 @@ public class SetupFrame extends JFrame {
         this.add(appKey);
         this.add(secretKey);
         this.add(urlBarcode);
-        this.add(autostart);
+        this.add(comList);
 
         // INPUTS FIELDS
         this.add(appKeyInput);
         this.add(secretKeyInput);
         this.add(urlBarcodeInput);
-        this.add(autostartCheck);
+        this.add(portList);
 
         //BUTTON
         this.add(buttonSave);

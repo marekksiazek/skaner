@@ -1,12 +1,10 @@
-package app.config;
+package app.scan;
 
-import app.dataHandler.CheckRegisterKey;
 import app.dataHandler.DataReader;
 import app.request.KeyHack;
 import com.fazecast.jSerialComm.SerialPort;
 import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;

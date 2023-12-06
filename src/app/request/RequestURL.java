@@ -54,8 +54,7 @@ public class RequestURL {
                 if (status != 200) {
                     UrlError errorURL = new UrlError();
                 }
-//                System.out.println(status);
-//                System.out.println(responseMSG);
+
 
 
             } catch (IOException e) {
