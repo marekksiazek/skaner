@@ -1,6 +1,6 @@
-package app.errors;
+package src.main.errors;
 
-import app.config.SetupFrame;
+import src.main.config.SetupFrame;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

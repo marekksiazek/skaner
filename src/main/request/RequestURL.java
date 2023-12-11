@@ -1,8 +1,9 @@
-package app.request;
+package src.main.request;
 
-import app.dataHandler.CheckRegisterKey;
-import app.dataHandler.DataReader;
-import app.errors.UrlError;
+
+import src.main.dataHandler.CheckRegisterKey;
+import src.main.dataHandler.DataReader;
+import src.main.errors.UrlError;
 
 import java.io.IOException;
 import java.io.OutputStream;

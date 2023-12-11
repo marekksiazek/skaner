@@ -1,12 +1,12 @@
-package app.dataHandler;
-
-import com.fazecast.jSerialComm.SerialPort;
+package src.main.dataHandler;
 
 import java.io.*;
 import java.util.ArrayList;
 
 public class DataReader {
-    public static File file = new File("C:\\Users\\marek.ksiazek\\AppData\\Local\\Barcode\\setup.ini");
+
+    public static String userName = System.getProperty("user.name");
+    public static File file = new File("C:\\Users\\" + userName + "\\AppData\\Local\\Barcode\\setup.ini");
     private String firstLine;
     private String secondLine;
     private String thirdLine;

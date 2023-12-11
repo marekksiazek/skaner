@@ -1,7 +1,7 @@
-package app.config;
+package src.main.config;
 
-import app.dataHandler.DataReader;
 import com.fazecast.jSerialComm.*;
+import src.main.dataHandler.DataReader;
 
 import javax.swing.*;
 import javax.swing.border.Border;

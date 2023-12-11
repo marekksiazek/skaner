@@ -1,13 +1,17 @@
-import app.Tray;
-import app.config.SetupFrame;
-import app.errors.*;
-import app.scan.Scan;
-import app.dataHandler.CheckRegisterKey;
-import app.dataHandler.DataReader;
-import app.dataHandler.SetupCheck;
-import app.request.DateRequest;
-import app.request.RequestURL;
+package src;
+
+
 import com.fazecast.jSerialComm.*;
+import src.main.Tray;
+import src.main.dataHandler.CheckRegisterKey;
+import src.main.dataHandler.DataReader;
+import src.main.dataHandler.SetupCheck;
+import src.main.errors.*;
+import src.main.request.DateRequest;
+import src.main.request.KeyHack;
+import src.main.request.RegisterRequest;
+import src.main.request.RequestURL;
+import src.main.scan.Scan;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,99 +25,83 @@ public class Main {
         boolean run = false;
         boolean startScan = false;
         SerialPort serialPort1 = null;
-        String username = System.getProperty("user.name");
-        String pathToSetupFile = "C:\\Users\\" + username + "\\AppData\\Local\\Barcode\\setup.ini";
-        boolean fileExist = new File(pathToSetupFile).exists();
-
+        String baseKey = "4609733220f8de810e1e8866d6d92ec9a073f3a569a517caee405e11e4f72949";
 
         SetupCheck setupCheck = new SetupCheck();
         Tray tray = new Tray();
+        DataReader dataReader = new DataReader();
+        KeyHack keyHack = new KeyHack();
 
+        String registerRequest = new RegisterRequest().getRegisterMSG();
+        if (registerRequest.equals("err")){
+            RegisterError registerFrame = new RegisterError();
+        }
         SerialPort[] serialPort = SerialPort.getCommPorts();
 
-        if (!fileExist){
-            CheckRegisterKey checkRegisterKey = new CheckRegisterKey();
-            String serialDisk = checkRegisterKey.getTrimSS();
-        }
+        if (registerRequest.equals(baseKey)){
 
+            String username = System.getProperty("user.name");
+            String pathToSetupFile = "C:\\Users\\" + username + "\\AppData\\Local\\Barcode\\setup.ini";
+            boolean fileExist = new File(pathToSetupFile).exists();
 
-
-        DataReader dataReader = new DataReader();
-        String appKey = dataReader.getAppKay();
-        String secretKey = dataReader.getSecretKey();
-        String URLBarcode = dataReader.getURLBarcode();
-        String comName = dataReader.getCom();
-
-        if (fileExist) {
-            System.out.println("File Exist!");
-            if (appKey == null) {
-                AppKeyError error = new AppKeyError();
-            } else if (secretKey == null) {
-                SecretKeyError error = new SecretKeyError();
-            } else if (URLBarcode == null) {
-                UrlError error = new UrlError();
-            } else if (comName == null){
-                ErrorBarcodeConnect error = new ErrorBarcodeConnect();
+            if (!fileExist){
+                CheckRegisterKey checkRegisterKey = new CheckRegisterKey();
+                String serialDisk = checkRegisterKey.getTrimSS();
             }
-            else {
-                System.out.println("File Exist else");
-                RequestURL request = new RequestURL();
-                run = true;
-                startScan = true;
-
-                Scan scan = new Scan();
-                DateRequest dateRequest = new DateRequest();
 
 
+            String appKey = dataReader.getAppKay();
+            String secretKey = dataReader.getSecretKey();
+            String URLBarcode = dataReader.getURLBarcode();
+            String comName = dataReader.getCom();
 
-                while (run){
-                    System.out.println("Inside while");
-                    if (serialPort.length == 0) {
-                        ErrorBarcodeConnect frame = new ErrorBarcodeConnect();
-                    } else {
-                        serialPort1 = SerialPort.getCommPort(DataReader.getComPort());
-                        serialPort1.setBaudRate(9600);
-                        serialPort1.setNumDataBits(8);
-                        serialPort1.setNumStopBits(1);
-                        serialPort1.setParity(SerialPort.NO_PARITY);
-                        serialPort1.openPort();
-                        startScan = true;
-                        run = false;
+            if (fileExist) {
+                if (appKey == null) {
+                    AppKeyError error = new AppKeyError();
+                } else if (secretKey == null) {
+                    SecretKeyError error = new SecretKeyError();
+                } else if (URLBarcode == null) {
+                    UrlError error = new UrlError();
+                } else if (comName == null){
+                    ErrorBarcodeConnect error = new ErrorBarcodeConnect();
+                }
+                else {
+                    RequestURL request = new RequestURL();
+                    run = true;
+                    startScan = true;
+
+                    Scan scan = new Scan();
+                    DateRequest dateRequest = new DateRequest();
+
+
+
+                    while (run){
+                        if (serialPort.length == 0) {
+                            ErrorBarcodeConnect frame = new ErrorBarcodeConnect();
+                        } else {
+                            serialPort1 = SerialPort.getCommPort(DataReader.getComPort());
+                            serialPort1.setBaudRate(9600);
+                            serialPort1.setNumDataBits(8);
+                            serialPort1.setNumStopBits(1);
+                            serialPort1.setParity(SerialPort.NO_PARITY);
+                            serialPort1.openPort();
+                            startScan = true;
+                            run = false;
+                        }
+                    }
+
+                    while (startScan){
+                        scan.Serial_EventBaseReading(serialPort1);
                     }
                 }
+            }
 
-                while (startScan){
-                    System.out.println("Inside while with scan");
-                    scan.Serial_EventBaseReading(serialPort1);
-                }
+
+
+
+
+
+
         }
-
-
-    }
-
-//        Scan scan = new Scan();
-//        DateRequest dateRequest = new DateRequest();
-//
-//
-//
-//        while (run){
-//            if (serialPort.length == 0) {
-//                ErrorBarcodeConnect frame = new ErrorBarcodeConnect();
-//            } else {
-//                serialPort1 = SerialPort.getCommPort(DataReader.getComPort());
-//                serialPort1.setBaudRate(9600);
-//                serialPort1.setNumDataBits(8);
-//                serialPort1.setNumStopBits(1);
-//                serialPort1.setParity(SerialPort.NO_PARITY);
-//                serialPort1.openPort();
-//                startScan = true;
-//             }
-//        }
-//
-//        while (startScan){
-//            scan.Serial_EventBaseReading(serialPort1);
-//        }
-
-
     }
 }
