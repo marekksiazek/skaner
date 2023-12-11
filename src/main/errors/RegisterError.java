@@ -1,17 +1,19 @@
-package app.errors;
+package src.main.errors;
 
-import app.config.SetupFrame;
+
+import src.main.config.SetupFrame;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AppKeyError extends JFrame{
-    public AppKeyError() {
+public class RegisterError extends JFrame{
+    public RegisterError() {
         JLabel msgConnectError = new JLabel();
         JButton btn = new JButton();
 
-        msgConnectError.setText("BRAK KLUCZA APLIKACJI");
+        msgConnectError.setText("BŁĄD REJESTRACJI");
         msgConnectError.setFont(new Font("Arial", Font.PLAIN, 14));
         msgConnectError.setForeground(Color.RED);
         msgConnectError.setBounds(80, 30, 200, 26);
@@ -21,13 +23,12 @@ public class AppKeyError extends JFrame{
         btn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    SetupFrame frame = new SetupFrame();
-                AppKeyError.this.dispose();
+                    System.exit(3);
             }
         });
 
 
-        this.setTitle("BRAK KLUCZA APLIKACJI");
+        this.setTitle("BŁĄD REJESTRACJI");
         this.setLocationRelativeTo(null);
         this.setLayout(null);
         this.setResizable(false);

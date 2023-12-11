@@ -1,4 +1,4 @@
-package app.errors;
+package src.main.errors;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
