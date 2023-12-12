@@ -1,6 +1,8 @@
 package src.main.dataHandler;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class DataReader {
@@ -11,6 +13,10 @@ public class DataReader {
     private String secondLine;
     private String thirdLine;
     private String comPort;
+
+
+
+
 
     public DataReader() {
         setFirstLine(getAppKay());
@@ -89,9 +95,6 @@ public class DataReader {
         return  comLine;
 
     }
-
-
-
     public String getFirstLine() {
         return firstLine;
     }
