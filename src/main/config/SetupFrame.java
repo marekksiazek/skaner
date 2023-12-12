@@ -15,12 +15,18 @@ public class SetupFrame extends JFrame {
 
     public String username = System.getProperty("user.name");
     public SerialPort[] portLists = SerialPort.getCommPorts();
+    String firstAppKeyInput;
+    String firstSecretKeyInput;
+    String firstUrlKeyInput;
+    String firstComInput;
 
 
 
 
     public SetupFrame() {
         Border borderInput = BorderFactory.createLineBorder(Color.DARK_GRAY, 1);
+
+
         String[] comLista = new String[portLists.length];
         for (int i=0; i < portLists.length; i++){
             String tempPort = portLists[i].getSystemPortName();
@@ -101,6 +107,10 @@ public class SetupFrame extends JFrame {
                     out.println(secretKeyInputValue);
                     out.println(urlBarcodeInputValue);
                     out.println(portListValue);
+                    firstAppKeyInput = appKeyInputValue;
+                    firstSecretKeyInput = secretKeyInputValue;
+                    firstUrlKeyInput = urlBarcodeInputValue;
+                    firstComInput = portListValue;
 
                     out.close();
 
@@ -140,6 +150,21 @@ public class SetupFrame extends JFrame {
 
         }
 
+    public String getFirstAppKeyInput() {
+        return firstAppKeyInput;
+    }
+
+    public String getFirstSecretKeyInput() {
+        return firstSecretKeyInput;
+    }
+
+    public String getFirstUrlKeyInput() {
+        return firstUrlKeyInput;
+    }
+
+    public String getFirstComInput() {
+        return firstComInput;
+    }
 }
 
 

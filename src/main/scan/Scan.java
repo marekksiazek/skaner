@@ -44,48 +44,22 @@ public class Scan {
                 while (messages.contains("\n")){
                     String[] message = messages.split("\\n", 2);
                     messages = (message.length > 1) ? message[1] : "";
-                    System.out.println("Message: " + message[0]);
-                    BarcodeShows barcodeShows = new BarcodeShows(message[0]);
-                    message[0] = "";
-
+                    String trimMessage = message[0].substring(0, message[0].length()-1);
+                    try {
+                        KeyHack keyHack = new KeyHack();
+                        String code = getBarcode(trimMessage);
+                        message[0] = "";
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
-//                BarcodeShows barcodeShows = new BarcodeShows(message[0]);
-
-
-
-//                try {
-//                    byte []newData = new byte[0];
-//                    for (int i = 0; i < 10; i++){
-//                        newData = serialPortEvent.getReceivedData();
-//                    }
-////                    byte []newData = serialPortEvent.getReceivedData();
-//                    dataBuffer = "";
-//
-//                    for (int i=0; i < newData.length; i++) {
-//                        dataBuffer += (char)newData[i];
-//                    }
-//
-//                    System.out.println(dataBuffer);
-//                    KeyHack keyHack = new KeyHack();
-//                    BarcodeShows barcodeShows = new BarcodeShows(dataBuffer);
-//
-//                    String code = getBarcode(dataBuffer);
-//                    System.out.println(code);
-//                    if (registerRequest.getRegisterMSG().equals("err")){
-//                    }
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e.getMessage());
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-//
             }
         });
 
     }
 
     public String getBarcode(String barcode) throws IOException {
-        URL url = new URL("https://stand-by.pl/barcode/scan.php?barcode=" + barcode + "&secretkey=" + new DataReader().getSecretKey());
+        URL url = new URL(new DataReader().getURLBarcode().trim() + "?barcode=" + barcode + "&secretkey=" + new DataReader().getSecretKey());
         HttpURLConnection con;
 
 
@@ -94,7 +68,7 @@ public class Scan {
         con.setDoOutput(true);
 
 
-        String outputString = "https://stand-by.pl/barcode/scan.php?barcode=" + barcode + "&secretkey=" + new DataReader().getSecretKey();
+        String outputString = new DataReader().getURLBarcode().trim() + "?barcode=" + barcode + "&secretkey=" + new DataReader().getSecretKey();
         OutputStream os = con.getOutputStream();
         byte[] input = outputString.getBytes("utf-8");
         os.write(input, 0, input.length);

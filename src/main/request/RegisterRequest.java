@@ -4,6 +4,7 @@ package src.main.request;
 
 import src.main.dataHandler.CheckRegisterKey;
 import src.main.dataHandler.DataReader;
+import src.main.errors.ConnectionError;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -19,26 +20,30 @@ public class RegisterRequest {
     }
 
     public String getRegisterMSG() throws IOException {
-        URL url = new URL("https://stand-by.pl/barcode/register.php?vol=" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getAppKay());
-        HttpURLConnection con;
+        try {
+            URL url = new URL("https://stand-by.pl/barcode/register.php?vol=" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getAppKay());
+            HttpURLConnection con;
 
 
-        con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("POST");
-        con.setDoOutput(true);
+            con = (HttpURLConnection) url.openConnection();
+            con.setRequestMethod("POST");
+            con.setDoOutput(true);
 
 
-        String outputString = "https://stand-by.pl/barcode/register.php?vol=" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getAppKay();
-        OutputStream os = con.getOutputStream();
-        byte[] input = outputString.getBytes("utf-8");
-        os.write(input, 0, input.length);
+            String outputString = "https://stand-by.pl/barcode/register.php?vol=" + CheckRegisterKey.getDiskSerialNumber() + "&key=" + new DataReader().getAppKay();
+            OutputStream os = con.getOutputStream();
+            byte[] input = outputString.getBytes("utf-8");
+            os.write(input, 0, input.length);
 
-        InputStream content = con.getInputStream();
-        String result = new BufferedReader(new InputStreamReader(content)).lines().parallel().collect(Collectors.joining("\n"));
+            InputStream content = con.getInputStream();
+            String result = new BufferedReader(new InputStreamReader(content)).lines().parallel().collect(Collectors.joining("\n"));
 
-        String trimResult = result.trim();
-        trimResult = "4609733220f8de810e1e8866d6d92ec9a073f3a569a517caee405e11e4f72949";
-        return trimResult;
+            String trimResult = result.trim();
+            trimResult = "4609733220f8de810e1e8866d6d92ec9a073f3a569a517caee405e11e4f72949";
+            return trimResult;
+        } catch (IOException e) {
+            return "error";
+        }
     }
 
 
