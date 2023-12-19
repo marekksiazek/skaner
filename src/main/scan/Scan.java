@@ -6,7 +6,9 @@ import com.fazecast.jSerialComm.SerialPortDataListener;
 import com.fazecast.jSerialComm.SerialPortEvent;
 import src.main.dataHandler.DataReader;
 import src.main.errors.BarcodeShows;
+import src.main.errors.ConnectionError;
 import src.main.errors.RegisterError;
+import src.main.request.InternetConnection;
 import src.main.request.KeyHack;
 import src.main.request.RegisterRequest;
 import sun.misc.IOUtils;
@@ -41,7 +43,13 @@ public class Scan {
             public void serialEvent(SerialPortEvent serialPortEvent) {
 
                 messages += new String(serialPortEvent.getReceivedData());
-                while (messages.contains("\n")){
+                while (messages.contains("\n") || messages.contains("\r")){
+                    InternetConnection internetConnection = new InternetConnection();
+                    boolean connection = internetConnection.netIsAvailable();
+
+                    if (!connection) {
+                        ConnectionError connectionError = new ConnectionError();
+                    }
                     String[] message = messages.split("\\n", 2);
                     messages = (message.length > 1) ? message[1] : "";
                     String trimMessage = message[0].substring(0, message[0].length()-1);

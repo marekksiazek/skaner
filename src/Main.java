@@ -2,8 +2,6 @@ package src;
 
 
 import com.fazecast.jSerialComm.*;
-import src.main.Tray;
-import src.main.config.SetupFrame;
 import src.main.dataHandler.CheckRegisterKey;
 import src.main.dataHandler.DataReader;
 import src.main.dataHandler.SetupCheck;

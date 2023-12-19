@@ -1,4 +1,4 @@
-package src.main;
+package src;
 
 import src.main.config.SetupFrame;
 
@@ -21,9 +21,9 @@ public class Tray {
 
         PopupMenu popMenu = new PopupMenu();
         MenuItem show = new MenuItem("Ustawienia");
+        MenuItem exit = new MenuItem("Zamknij");
 
-//        URL url = System.class.getResource("src/barcode.png");
-        Image img =  Toolkit.getDefaultToolkit().getImage("src/barcode.png");
+        Image img =  Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("src/barcode.png"));
         TrayIcon trayIcon = new TrayIcon(img, "Scanner", popMenu);
         show.addActionListener(new ActionListener() {
             @Override
@@ -32,7 +32,6 @@ public class Tray {
             }
         });
 
-        MenuItem exit = new MenuItem("Zamknij");
         exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -43,6 +42,7 @@ public class Tray {
         popMenu.add(show);
         popMenu.add(exit);
 
+        trayIcon.setImageAutoSize(true);
         trayIcon.setPopupMenu(popMenu);
 
         try {
